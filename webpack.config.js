@@ -10,7 +10,12 @@ module.exports = {
       import: "./src/index.tsx",
       dependOn: "lib",
     },
-    lib: "./src/lib.ts",
+    lib: {
+      import: "./src/lib.ts",
+      library: {
+        type: "commonjs2",
+      },
+    },
   },
   devtool: "source-map",
   module: {
