@@ -1,11 +1,13 @@
 {
-  "name": "tinjs-tw",
+  "name": "@tinqjs/tinjs-tw",
   "version": "1.0.0",
   "main": "dist/lib.js",
   "typings": "dist/lib.d.ts",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist/lib.js",
+    "dist/lib.js.map",
+    "dist/lib.d.ts"
   ],
   "scripts": {
     "dev": "npx webpack serve",
