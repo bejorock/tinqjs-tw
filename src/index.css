@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .field .fakeInput {
+    @apply mt-1;
+    @apply focus:ring-indigo-500;
+    @apply focus:border-indigo-500;
+    @apply w-full;
+    @apply shadow-sm;
+    @apply sm:text-sm;
+    @apply border;
+    @apply rounded-md;
+    @apply border-gray-300;
+    @apply disabled:bg-gray-200;
+  }
+
+  .field .fakeInput:not(.flex) {
+    @apply block;
+  }
+
+  .field .fakeInput:not(.p-none) {
+    @apply py-2;
+    @apply px-3;
+  }
+}
