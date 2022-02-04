@@ -2,8 +2,11 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { forwardRef, useState } from "react";
 import { useSafe } from "../util/safe";
+import colors from "tailwindcss/colors";
 
-const colors = require("tailwindcss/colors");
+// console.log(x);
+
+// const colors = require("tailwindcss/colors");
 
 export declare type ColorPickerOptions = {
   defaultValue?: any;
