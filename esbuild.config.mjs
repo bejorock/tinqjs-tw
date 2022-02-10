@@ -1,6 +1,8 @@
 // import chokidar from "chokidar";
 import esbuild from "esbuild";
 import fs from "fs";
+import path from "path";
+
 /* const {
   dependencies,
   peerDependencies,
@@ -73,10 +75,16 @@ const files = ["src/lib.ts"];
 buildEsm(files)
   .then(() => buildCjs(files))
   .then(() =>
-    new dts.Generator({
-      entry: "lib.ts",
-      output: "dist/lib.d.ts",
-    })
+    new dts.Generator(
+      {
+        logLevel: "debug",
+        entry: "src/lib.ts",
+        output: "dist/lib.d.ts",
+        tsc: "-p tsconfig.build.json",
+      },
+      true,
+      true
+    )
       .generate()
       .then(() => console.log("create lib.d.ts"))
   )

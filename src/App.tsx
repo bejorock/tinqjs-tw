@@ -2,7 +2,12 @@ import React, { useMemo, useRef, useState } from "react";
 
 import faker from "faker";
 
-import { dropdown, ColorPicker, IconPicker, MultiComplete } from "./components";
+import {
+  ColorPicker,
+  IconPicker,
+  MultiComplete,
+  TextComplete,
+} from "./components";
 import styled from "styled-components";
 import tw from "twin.macro";
 import useTable from "./hooks/useTable";
@@ -12,7 +17,7 @@ import Table from "./components/table";
 import useAutoComplete from "./hooks/useAutoComplete";
 import useMultiComplete from "./hooks/useMultiComplete";
 import { useModal } from "./controllers/modal/useModal";
-import Modal from "./components/modal/modal";
+import { Modal } from "./components/modal/modal";
 import { IAutoCompleteValue } from "./components/dropdown";
 
 const Button = styled.button`
@@ -153,7 +158,7 @@ function App() {
       <div className="grid grid-cols-8 gap-3 p-10">
         <div className="field">
           <label>Sample Auto Complete</label>
-          <dropdown.TextComplete
+          <TextComplete
             onChange={(val) => {
               console.log(val);
               setSampleValue(val);
@@ -228,9 +233,9 @@ function App() {
         </div>
 
         <div className="field">
-          <Modal control={modalController.control}>
+          {/* <Modal control={modalController.control}>
             <div className="bg-white">Hello world</div>
-          </Modal>
+          </Modal> */}
           <Button onClick={modalController.open}>Click Me</Button>
         </div>
       </div>

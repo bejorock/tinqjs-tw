@@ -1,4 +1,3 @@
-import { IPromptControl } from "../../components/modal/prompt";
 import { useToggle } from "../../hooks/useToggle";
 import { syncPipe } from "../../util/pipe";
 import { IModalController, useModal } from "./useModal";
@@ -14,7 +13,7 @@ export const usePrompt = (): IPromptController => {
   const approve = syncPipe(forceApprove, close);
   const reject = syncPipe(forceReject, close);
 
-  const control: IPromptControl = {
+  const control: any = {
     ...modalController.control,
     approve,
     reject,

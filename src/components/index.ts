@@ -5,4 +5,6 @@ export { default as IconPicker } from "./iconPicker";
 export { default as Paging } from "./paging";
 export { default as Table } from "./table";
 
-export * as dropdown from "./dropdown";
+export * from "./widget";
+export * from "./dropdown";
+export * from "./modal";

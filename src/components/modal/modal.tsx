@@ -3,24 +3,26 @@ import { ForwardedRef, forwardRef, Fragment, useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
-export interface IModalControl {
+/* export interface IModalControl {
   isOpen: boolean;
   onClose: () => void;
-}
+} */
 
-export interface IModalOptions<T extends IModalControl> {
-  control: T;
-  children: any;
+export interface IModalOptions {
+  // control: T;
+  show?: boolean;
+  onClose?: () => void;
   className?: string;
+  children: any;
 }
 
 const Template = (
-  { control, children, className }: IModalOptions<IModalControl>,
+  { show, onClose, children, className }: IModalOptions,
   ref: ForwardedRef<any>
 ) => {
   return (
-    <Transition appear show={control.isOpen} as={Fragment}>
-      <Dialog as="div" className={className} onClose={control.onClose}>
+    <Transition appear show={show} as={Fragment}>
+      <Dialog as="div" className={className} onClose={onClose}>
         <div className="x-dialog-container">
           <Transition.Child
             as={Fragment}
@@ -62,7 +64,7 @@ const Template = (
 
 const Referable = forwardRef(Template);
 
-const Modal = styled(Referable)`
+export const Modal = styled(Referable)`
   ${tw`fixed`}
   ${tw`inset-0`}
   ${tw`z-10`}
@@ -104,7 +106,7 @@ const Modal = styled(Referable)`
   }
 `;
 
-export default Modal;
+// export default Modal;
 
 /* .modal {
   @apply inline-block;

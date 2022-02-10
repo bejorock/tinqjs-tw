@@ -1,17 +1,19 @@
 import { ForwardedRef, forwardRef } from "react";
-import Modal, { IModalControl, IModalOptions } from "./modal";
+import { Modal, IModalOptions } from "./modal";
 import styled from "styled-components";
 import tw from "twin.macro";
 
-export interface IPromptControl extends IModalControl {
+/* export interface IPromptControl extends IModalControl {
   approve: (e) => void;
   reject: (e) => void;
-}
+} */
 
-export interface IPromptOptions extends IModalOptions<IPromptControl> {
+export interface IPromptOptions extends IModalOptions {
   question: string;
   answerYes?: string;
   answerNo?: string;
+  onApprove?: () => void;
+  onReject?: () => void;
 }
 
 const Template = (props: IPromptOptions, ref: ForwardedRef<any>) => {
@@ -21,10 +23,10 @@ const Template = (props: IPromptOptions, ref: ForwardedRef<any>) => {
         {props.question}
       </h1>
       <div className="x-prompt-action">
-        <button className="x-yes" onClick={props.control.approve}>
+        <button className="x-yes" onClick={props.onApprove}>
           {props.answerYes || "Yes"}
         </button>
-        <button className="x-no " onClick={props.control.reject}>
+        <button className="x-no " onClick={props.onReject}>
           {props.answerNo || "No"}
         </button>
       </div>
@@ -34,7 +36,7 @@ const Template = (props: IPromptOptions, ref: ForwardedRef<any>) => {
 
 const Referable = forwardRef(Template);
 
-const Prompt = styled(Referable)`
+export const Prompt = styled(Referable)`
   & > .x-prompt-title {
     ${tw`text-2xl`}
     ${tw`font-semibold`}
@@ -60,5 +62,3 @@ const Prompt = styled(Referable)`
     ${tw`bg-red-500`}
   }
 `;
-
-export default Prompt;

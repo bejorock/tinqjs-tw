@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { IModalControl } from "../../components/modal/modal";
+// import { IModalControl } from "../../components/modal/modal";
 import { useToggle } from "../../hooks/useToggle";
 
 export interface IModalController {
   isOpen: boolean;
   open: () => void;
   close: () => void;
-  control: IModalControl;
+  control: any;
 }
 
 export const useModal = (): IModalController => {
@@ -19,7 +19,7 @@ export const useModal = (): IModalController => {
   const open = () => forceOpen();
   const close = () => forceClose();
 
-  const control: IModalControl = {
+  const control: any = {
     isOpen,
     onClose: () => forceClose(),
   };

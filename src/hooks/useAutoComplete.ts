@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useSafeMemo } from "../util";
 
-export declare type IAutoCompleteValue = {
+declare type IAutoCompleteValue = {
   id: any;
   text: any;
 };

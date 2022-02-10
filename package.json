@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "npx webpack serve",
-    "build": "node esbuild.config.mjs"
+    "build": "npx node esbuild.config.mjs"
   },
   "dependencies": {},
   "peerDependencies": {
