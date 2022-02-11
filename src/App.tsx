@@ -46,6 +46,24 @@ const dateFormat = new Intl.DateTimeFormat("id", {
   dateStyle: "full",
 } as any);
 
+const GreetComponent_ = ({ className = "" }) => (
+  <div className={className}>
+    Hello <span>World</span>
+  </div>
+);
+
+const GreetComponent = styled(GreetComponent_)`
+  ${tw`text-red-600`}
+
+  & > span {
+    ${tw`text-green-400`}
+  }
+`;
+
+const GreetComponentCustom = styled(GreetComponent)`
+  ${tw`underline`}
+`;
+
 function App() {
   const autoRef = useRef();
   const multiRef = useRef();
@@ -155,6 +173,8 @@ function App() {
 
   return (
     <>
+      <GreetComponent />
+      <GreetComponentCustom />
       <div className="grid grid-cols-8 gap-3 p-10">
         <div className="field">
           <label>Sample Auto Complete</label>
