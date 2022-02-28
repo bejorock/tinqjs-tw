@@ -18,7 +18,7 @@ export interface PagingOpts {
   onChange: (index: number) => void;
 }
 
-export default function Paging({ data, count, limit, onChange }: PagingOpts) {
+export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(count / limit));
   const [startSlice, setStartSlice] = useState(currentIndex);
@@ -145,7 +145,7 @@ export default function Paging({ data, count, limit, onChange }: PagingOpts) {
 
             {currentIndex + 2 < totalPages ? (
               <>
-                <label className="index">...</label>
+                <label className={indexClasses}>...</label>
                 {pages[totalPages - 1]}
               </>
             ) : null}
@@ -169,4 +169,4 @@ export default function Paging({ data, count, limit, onChange }: PagingOpts) {
       </div>
     </div>
   );
-}
+};

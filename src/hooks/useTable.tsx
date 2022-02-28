@@ -4,7 +4,8 @@ export declare type ITableColumn = {
   name: string;
   key?: any;
   feature?: string;
-  style?: string;
+  style?: any;
+  className?: string;
   width?: number;
 };
 
@@ -13,7 +14,7 @@ export declare type ITableItem = {
 };
 
 export declare type UseTableOpts = {
-  columns: (string | ITableColumn)[];
+  columns: ITableColumn[];
   data: any[];
   settings?: ITableSettings;
 };
@@ -36,7 +37,9 @@ export declare type ITableBody = {
 
 export declare type ITableRow = {
   getProps: (options?: ITableProps) => ITableProps;
-  renderCell: (cellEl: (cell: ITableCell, i: number) => any) => any;
+  renderCell: (
+    cellEl: (cell: ITableCell, i: number, style?: any) => any
+  ) => any;
 };
 
 export declare type ITableCell = {
@@ -50,6 +53,7 @@ export declare type ITableFeature = {
   stickyLeft?: boolean;
   stickyRight?: boolean;
   sortable?: boolean;
+  sumable?: boolean;
   formatter?: (value: any) => any;
   validator?: (value: any) => boolean;
 };
@@ -70,11 +74,14 @@ export declare type ITableSettings = {
   };
 };
 
-export default function useTable({
-  columns,
-  data,
-  settings = {},
-}: UseTableOpts) {
+const add = (a: any, b: any) => {
+  a = isNaN(a) ? 0 : a;
+  b = isNaN(b) ? 0 : b;
+
+  return a + b;
+};
+
+export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
   const features = useMemo(() => {
     if (!settings) return {};
 
@@ -123,7 +130,11 @@ export default function useTable({
         val: name,
         getProps: (options: ITableProps = {}) => ({
           className: options.className,
-          style: { width: width ? width + "px" : "80px", ...options.style },
+          // style: { width: width ? width + "px" : "80px", ...options.style },
+          style: {
+            ...(width ? { width: width + "px" } : {}),
+            ...options.style,
+          },
         }),
       };
 
@@ -138,7 +149,11 @@ export default function useTable({
           className: f.sortable
             ? `cursor-pointer ${options.className}`
             : options.className,
-          style: { width: width ? width + "px" : "80px", ...options.style },
+          // style: { width: width ? width + "px" : "80px", ...options.style },
+          style: {
+            ...(width ? { width: width + "px" } : {}),
+            ...options.style,
+          },
         });
 
         // if (f.sortable) tmp.className = ["cursor-pointer"];
@@ -156,7 +171,7 @@ export default function useTable({
 
     return {
       getProps: (options = {}) => ({
-        className: `row header min-w-full w-max ${options.className}`,
+        className: `row header ${options.className || ""}`,
         style: { ...options.style },
       }),
 
@@ -166,20 +181,35 @@ export default function useTable({
 
         if (stickyLeft.length > 0) {
           tmp.unshift(
-            <div className="stickyCol left-0" key={counter++}>
-              {stickyLeft.map((h, i) => cellEl(h, counter++))}
+            <div className="stickyCol stickyLeft" key={counter++}>
+              {stickyLeft.map((h, i) =>
+                cellEl(h, counter++, {
+                  style: columns[counter - 1]?.style,
+                  className: columns[counter - 1]?.className,
+                })
+              )}
             </div>
           );
         }
 
         for (let h of nonSticky) {
-          tmp.push(cellEl(h, counter++));
+          tmp.push(
+            cellEl(h, counter++, {
+              style: columns[counter - 1]?.style,
+              className: columns[counter - 1]?.className,
+            })
+          );
         }
 
         if (stickyRight.length > 0) {
           tmp.push(
-            <div className="stickyCol right-0" key={counter++}>
-              {stickyRight.map((h, i) => cellEl(h, counter++))}
+            <div className="stickyCol stickyRight" key={counter++}>
+              {stickyRight.map((h, i) =>
+                cellEl(h, counter++, {
+                  style: columns[counter - 1]?.style,
+                  className: columns[counter - 1]?.className,
+                })
+              )}
             </div>
           );
         }
@@ -206,7 +236,11 @@ export default function useTable({
           val: key ? d[key] : d,
           getProps: (options: ITableProps = {}) => ({
             className: options.className,
-            style: { width: width ? width + "px" : "80px", ...options.style },
+            // style: { width: width ? width + "px" : "80px", ...options.style },
+            style: {
+              ...(width ? { width: width + "px" } : {}),
+              ...options.style,
+            },
           }),
         };
 
@@ -233,20 +267,35 @@ export default function useTable({
 
           if (stickyLeft.length > 0) {
             tmp.unshift(
-              <div className="stickyCol left-0" key={counter++}>
-                {stickyLeft.map((h, i) => cellEl(h, counter++))}
+              <div className="stickyCol stickyLeft" key={counter++}>
+                {stickyLeft.map((h, i) =>
+                  cellEl(h, counter++, {
+                    style: columns[counter - 1]?.style,
+                    className: columns[counter - 1]?.className,
+                  })
+                )}
               </div>
             );
           }
 
           for (let h of nonSticky) {
-            tmp.push(cellEl(h, counter++));
+            tmp.push(
+              cellEl(h, counter++, {
+                style: columns[counter - 1]?.style,
+                className: columns[counter - 1]?.className,
+              })
+            );
           }
 
           if (stickyRight.length > 0) {
             tmp.push(
-              <div className="stickyCol right-0" key={counter++}>
-                {stickyRight.map((h, i) => cellEl(h, counter++))}
+              <div className="stickyCol stickyRight" key={counter++}>
+                {stickyRight.map((h, i) =>
+                  cellEl(h, counter++, {
+                    style: columns[counter - 1]?.style,
+                    className: columns[counter - 1]?.className,
+                  })
+                )}
               </div>
             );
           }
@@ -254,7 +303,7 @@ export default function useTable({
           return tmp;
         },
         getProps: (options = {}) => ({
-          className: `row min-w-full w-max ${options.className}`,
+          className: `row ${options.className || ""}`,
           style: { ...options.style },
         }),
       };
@@ -272,5 +321,110 @@ export default function useTable({
     };
   }, [data, features]);
 
-  return { headers, body };
-}
+  const footers: ITableRow = useMemo(() => {
+    const cols = columns.map((l) =>
+      typeof l === "string" ? ({} as ITableColumn) : (l as ITableColumn)
+    );
+    const d = data.reduce((acc, entry) => {
+      const tmp: any = {};
+
+      for (let c of cols) {
+        if (c.feature && features[c.feature]) {
+          const f = features[c.feature] as ITableFeature;
+
+          if (f.sumable) tmp[c.key] = add(acc[c.key], entry[c.key]);
+        } else tmp[c.key] = "-";
+      }
+
+      // console.log(tmp);
+
+      return tmp;
+    }, {} as any);
+
+    const stickyLeft = [];
+    const stickyRight = [];
+    const nonSticky = [];
+    let counter = 0;
+
+    for (let l of columns) {
+      const { feature, style, width, key } =
+        typeof l === "string" ? ({} as ITableColumn) : (l as ITableColumn);
+
+      const tmp: ITableCell = {
+        val: key ? d[key] : d,
+        getProps: (options: ITableProps = {}) => ({
+          className: options.className,
+          // style: { width: width ? width + "px" : "80px", ...options.style },
+          style: {
+            ...(width ? { width: width + "px" } : {}),
+            ...options.style,
+          },
+        }),
+      };
+
+      if (feature && features[feature]) {
+        const f = features[feature] as ITableFeature;
+
+        if (f.stickyLeft) stickyLeft.push(tmp);
+        else if (f.stickyRight) stickyRight.push(tmp);
+        else nonSticky.push(tmp);
+
+        if (f.formatter) tmp.val = f.formatter(d[key]);
+        if (f.validator) tmp.val = f.validator(d[key]) ? tmp.val : null;
+
+        // console.log(tmp.val);
+      } else nonSticky.push(tmp);
+    }
+
+    const tmpRow: ITableRow = {
+      renderCell: (cellEl) => {
+        const tmp = [];
+
+        if (stickyLeft.length > 0) {
+          tmp.unshift(
+            <div className="stickyCol stickyLeft" key={counter++}>
+              {stickyLeft.map((h, i) =>
+                cellEl(h, counter++, {
+                  style: columns[counter - 1]?.style,
+                  className: columns[counter - 1]?.className,
+                })
+              )}
+            </div>
+          );
+        }
+
+        for (let h of nonSticky) {
+          tmp.push(
+            cellEl(h, counter++, {
+              style: columns[counter - 1]?.style,
+              className: columns[counter - 1]?.className,
+            })
+          );
+        }
+
+        if (stickyRight.length > 0) {
+          tmp.push(
+            <div className="stickyCol stickyRight" key={counter++}>
+              {stickyRight.map((h, i) =>
+                cellEl(h, counter++, {
+                  style: columns[counter - 1]?.style,
+                  className: columns[counter - 1]?.className,
+                })
+              )}
+            </div>
+          );
+        }
+
+        return tmp;
+      },
+      getProps: (options = {}) => ({
+        className: `row footer ${options.className || ""}`,
+        style: { ...options.style },
+      }),
+    };
+
+    return tmpRow;
+  }, [data, features]);
+
+  return { headers, body, footers };
+};

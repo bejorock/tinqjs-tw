@@ -1,16 +1,26 @@
 import styled from "styled-components";
 import tw from "twin.macro";
 
-const Table = styled.div`
+export const Table = styled.div`
   & > .row {
     ${tw`flex`}
     ${tw`gap-px`}
     ${tw`bg-white`}
+    ${tw`min-w-full`}
+    ${tw`w-max`}
   }
 
   & > .row:not(.header):hover {
     ${tw`bg-gray-400`}
     ${tw`bg-opacity-10`}
+  }
+
+  & > .row > div.stickyCol.stickyLeft {
+    ${tw`left-0`}
+  }
+
+  & > .row > div.stickyCol.stickyRight {
+    ${tw`right-0`}
   }
 
   & > .row > div:not(.stickyCol),
@@ -26,9 +36,6 @@ const Table = styled.div`
 
   & > .row:not(.header) > div:not(.stickyCol),
   & > .row > div.stickyCol > div {
-    ${tw`border-b`}
-    ${tw`border-gray-300`}
-    ${tw`border-opacity-30`}
   }
 
   & > .row > div:not(.stickyCol)::-webkit-scrollbar,
@@ -36,9 +43,13 @@ const Table = styled.div`
     display: none;
   }
 
-  & > .row.header > div:not(.stickyCol),
-  & > .row.header > div.stickyCol > div {
-    ${tw`font-semibold`}
+  & > .row:not(.header) {
+    ${tw`border-b`}
+    ${tw`border-gray-300`}
+    ${tw`border-opacity-30`}
+  }
+
+  & > .row.header {
     ${tw`bg-gray-300`}
     ${tw`border-b`}
     ${tw`border-t`}
@@ -46,6 +57,24 @@ const Table = styled.div`
     ${tw`border-opacity-20`}
   }
 
+  & > .row.header > div:not(.stickyCol),
+  & > .row.header > div.stickyCol > div {
+    ${tw`font-semibold`}
+  }
+
+  & > .row > div.stickyCol {
+    ${tw`flex`}
+    ${tw`min-w-max`}
+    ${tw`sticky`}
+    ${tw`backdrop-filter`}
+    ${tw`backdrop-blur`}
+    ${tw`border-opacity-40`}
+    ${tw`overflow-visible`}
+    ${tw`gap-px`}
+  }
+`;
+
+/*
   & > .row > div.stickyCol {
     ${tw`flex`}
     ${tw`min-w-max`}
@@ -58,6 +87,4 @@ const Table = styled.div`
     ${tw`overflow-visible`}
     ${tw`gap-px`}
   }
-`;
-
-export default Table;
+*/
