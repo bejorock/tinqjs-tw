@@ -54,7 +54,7 @@ export declare type ITableFeature = {
   stickyRight?: boolean;
   sortable?: boolean;
   sumable?: boolean;
-  formatter?: (value: any) => any;
+  formatter?: (value: any, item: any) => any;
   validator?: (value: any) => boolean;
 };
 
@@ -251,7 +251,7 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
           else if (f.stickyRight) stickyRight.push(tmp);
           else nonSticky.push(tmp);
 
-          if (f.formatter) tmp.val = f.formatter(d[key]);
+          if (f.formatter) tmp.val = f.formatter(d[key], d);
           if (f.validator) tmp.val = f.validator(d[key]) ? tmp.val : null;
 
           // console.log(tmp.val);
@@ -369,7 +369,7 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
         else if (f.stickyRight) stickyRight.push(tmp);
         else nonSticky.push(tmp);
 
-        if (f.formatter) tmp.val = f.formatter(d[key]);
+        if (f.formatter) tmp.val = f.formatter(d[key], d);
         if (f.validator) tmp.val = f.validator(d[key]) ? tmp.val : null;
 
         // console.log(tmp.val);
