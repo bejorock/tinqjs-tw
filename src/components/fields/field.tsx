@@ -3,6 +3,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export declare type IFieldOpts = {
+  required?: boolean;
   label?: string | JSX.Element;
   className?: string;
   children: any;
@@ -10,7 +11,12 @@ export declare type IFieldOpts = {
 
 const Template = (props: IFieldOpts, ref: ForwardedRef<any>) => (
   <div ref={ref} className={props.className}>
-    {props.label && <label className="x-label">{props.label}</label>}
+    {props.label && (
+      <label className="x-label">
+        {props.label}{" "}
+        {props.required ? <span tw="text-red-500 pr-0.5">*</span> : null}
+      </label>
+    )}
     {props.children}
   </div>
 );

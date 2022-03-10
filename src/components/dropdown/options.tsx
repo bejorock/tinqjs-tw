@@ -1,4 +1,10 @@
-import { ForwardedRef, forwardRef, useContext, useEffect } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -13,13 +19,22 @@ export declare type IOptionsProps = {
 
 const Template = (props: IOptionsProps, ref: ForwardedRef<any>) => {
   const context = useContext(SelectContext);
+  const [timeRef, setTimeRef] = useState<any>();
 
-  // useEffect(() => console.log("dfd"), []);
+  const mouseLeaveHandler = () =>
+    setTimeRef(setTimeout(() => context.setOpen(false), 1000));
+
+  const mouseEnterHandler = () => {
+    if (timeRef) clearTimeout(timeRef);
+
+    setTimeRef(null);
+  };
 
   return (
     <div
       className={props.className}
-      onMouseLeave={() => context.setOpen(false)}
+      onMouseLeave={mouseLeaveHandler}
+      onMouseEnter={mouseEnterHandler}
     >
       <div className="x-options-query">
         <input

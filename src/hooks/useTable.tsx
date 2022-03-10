@@ -178,10 +178,14 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
       renderCell: (cellEl) => {
         const tmp = [];
         let counter = 0;
+        let stickyCounter = 0;
 
         if (stickyLeft.length > 0) {
           tmp.unshift(
-            <div className="stickyCol stickyLeft" key={counter++}>
+            <div
+              className="stickyCol stickyLeft"
+              key={`sticky${stickyCounter++}`}
+            >
               {stickyLeft.map((h, i) =>
                 cellEl(h, counter++, {
                   style: columns[counter - 1]?.style,
@@ -203,7 +207,10 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
 
         if (stickyRight.length > 0) {
           tmp.push(
-            <div className="stickyCol stickyRight" key={counter++}>
+            <div
+              className="stickyCol stickyRight"
+              key={`sticky${stickyCounter++}`}
+            >
               {stickyRight.map((h, i) =>
                 cellEl(h, counter++, {
                   style: columns[counter - 1]?.style,
@@ -226,7 +233,7 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
       const stickyLeft = [];
       const stickyRight = [];
       const nonSticky = [];
-      let counter = 0;
+      // let counter = 0;
 
       for (let l of columns) {
         const { feature, style, width, key } =
@@ -264,10 +271,15 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
       const tmpRow: ITableRow = {
         renderCell: (cellEl) => {
           const tmp = [];
+          let counter = 0;
+          let stickyCounter = 9;
 
           if (stickyLeft.length > 0) {
             tmp.unshift(
-              <div className="stickyCol stickyLeft" key={counter++}>
+              <div
+                className="stickyCol stickyLeft"
+                key={`sticky${stickyCounter++}`}
+              >
                 {stickyLeft.map((h, i) =>
                   cellEl(h, counter++, {
                     style: columns[counter - 1]?.style,
@@ -289,7 +301,10 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
 
           if (stickyRight.length > 0) {
             tmp.push(
-              <div className="stickyCol stickyRight" key={counter++}>
+              <div
+                className="stickyCol stickyRight"
+                key={`sticky${stickyCounter++}`}
+              >
                 {stickyRight.map((h, i) =>
                   cellEl(h, counter++, {
                     style: columns[counter - 1]?.style,
@@ -344,7 +359,7 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
     const stickyLeft = [];
     const stickyRight = [];
     const nonSticky = [];
-    let counter = 0;
+    // let counter = 0;
 
     for (let l of columns) {
       const { feature, style, width, key } =
@@ -379,10 +394,15 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
     const tmpRow: ITableRow = {
       renderCell: (cellEl) => {
         const tmp = [];
+        let counter = 0;
+        let stickyCounter = 0;
 
         if (stickyLeft.length > 0) {
           tmp.unshift(
-            <div className="stickyCol stickyLeft" key={counter++}>
+            <div
+              className="stickyCol stickyLeft"
+              key={`sticky${stickyCounter++}`}
+            >
               {stickyLeft.map((h, i) =>
                 cellEl(h, counter++, {
                   style: columns[counter - 1]?.style,
@@ -404,7 +424,10 @@ export const useTable = ({ columns, data, settings = {} }: UseTableOpts) => {
 
         if (stickyRight.length > 0) {
           tmp.push(
-            <div className="stickyCol stickyRight" key={counter++}>
+            <div
+              className="stickyCol stickyRight"
+              key={`sticky${stickyCounter++}`}
+            >
               {stickyRight.map((h, i) =>
                 cellEl(h, counter++, {
                   style: columns[counter - 1]?.style,

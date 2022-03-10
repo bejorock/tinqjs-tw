@@ -66,13 +66,17 @@ export const Table = styled.div`
     ${tw`flex`}
     ${tw`min-w-max`}
     ${tw`sticky`}
-    ${tw`backdrop-filter`}
-    ${tw`backdrop-blur`}
     ${tw`border-opacity-40`}
     ${tw`overflow-visible`}
     ${tw`gap-px`}
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
+
+//${tw`backdrop-filter`}
+// ${tw`backdrop-blur`}
 
 /*
   & > .row > div.stickyCol {
