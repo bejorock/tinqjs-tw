@@ -1,6 +1,6 @@
 {
   "name": "@tinqjs/tinjs-tw",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "main": "dist/lib.js",
   "module": "dist/lib.esm.js",
   "typings": "dist/lib.d.ts",
