@@ -4,21 +4,25 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { ForwardedRef, forwardRef, useEffect, useState } from "react";
+import styled from "styled-components";
+import tw from "twin.macro";
 
-const indexClasses =
-  "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium";
-const activeClasses =
-  "z-10 bg-indigo-50 border-indigo-500 text-indigo-600 hover:bg-indigo-50";
+const indexClasses = "x-index";
+const activeClasses = "x-active";
 
 export interface PagingOpts {
   data: any[];
   count: number;
   limit: number;
   onChange: (index: number) => void;
+  className?: string;
 }
 
-export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
+const Template = (
+  { data, count, limit, onChange, className }: PagingOpts,
+  ref: ForwardedRef<any>
+) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [totalPages, setTotalPages] = useState(Math.ceil(count / limit));
   const [startSlice, setStartSlice] = useState(currentIndex);
@@ -68,11 +72,11 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
   }, [totalPages, currentIndex]);
 
   return (
-    <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-      <div className="flex-1 flex justify-between sm:hidden">
+    <div ref={ref} className={className}>
+      <div className="short-pagination">
         <a
           href="#"
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          className="x-prev"
           onClick={(e) => {
             e.preventDefault();
             if (currentIndex > 0) {
@@ -85,7 +89,7 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
         </a>
         <a
           href="#"
-          className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          className="x-next"
           onClick={(e) => {
             e.preventDefault();
             if (currentIndex < totalPages) {
@@ -97,28 +101,20 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
           Next
         </a>
       </div>
-      <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-gray-700">
+      <div className="long-pagination">
+        <div className="x-info">
+          <p>
             Showing{" "}
-            <span className="font-medium">
-              {data.length > 0 ? (currentIndex - 1) * limit + 1 : 0}
-            </span>{" "}
-            to{" "}
-            <span className="font-medium">
-              {(currentIndex - 1) * limit + data.length}
-            </span>{" "}
-            of <span className="font-medium">{count}</span> results
+            <span>{data.length > 0 ? (currentIndex - 1) * limit + 1 : 0}</span>{" "}
+            to <span>{(currentIndex - 1) * limit + data.length}</span> of{" "}
+            <span>{count}</span> results
           </p>
         </div>
-        <div>
-          <nav
-            className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-            aria-label="Pagination"
-          >
+        <div className="x-numbers">
+          <nav aria-label="Pagination">
             <a
               href="#"
-              className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              className="x-prev"
               onClick={(e) => {
                 e.preventDefault();
                 if (currentIndex > 1) {
@@ -128,14 +124,20 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
               }}
             >
               <FontAwesomeIcon icon={faChevronLeft} />
-              <span className="sr-only">Previous</span>
+              <span>Previous</span>
               {/* <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" /> */}
             </a>
             {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
             {currentIndex - 2 > 1 ? (
               <>
                 {pages[0]}
-                <label className={indexClasses}>...</label>
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className={indexClasses}
+                >
+                  ...
+                </a>
               </>
             ) : null}
 
@@ -145,13 +147,19 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
 
             {currentIndex + 2 < totalPages ? (
               <>
-                <label className={indexClasses}>...</label>
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  className={indexClasses}
+                >
+                  ...
+                </a>
                 {pages[totalPages - 1]}
               </>
             ) : null}
             <a
               href="#"
-              className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              className="x-next"
               onClick={(e) => {
                 e.preventDefault();
                 if (currentIndex < totalPages) {
@@ -160,7 +168,7 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
                 }
               }}
             >
-              <span className="sr-only">Next</span>
+              <span>Next</span>
               <FontAwesomeIcon icon={faChevronRight} />
               {/* <ChevronRightIcon className="h-5 w-5" aria-hidden="true" /> */}
             </a>
@@ -170,3 +178,147 @@ export const Paging = ({ data, count, limit, onChange }: PagingOpts) => {
     </div>
   );
 };
+
+const Referable = forwardRef(Template);
+
+export const Paging = styled(Referable)`
+  ${tw`bg-white`}
+  ${tw`px-4`}
+  ${tw`py-3`}
+  ${tw`flex`}
+  ${tw`items-center`}
+  ${tw`justify-between`}
+  ${tw`border-t`}
+  ${tw`border-gray-200`}
+  ${tw`sm:px-6`}
+
+  & > .short-pagination {
+    ${tw`flex-1`}
+    ${tw`flex`}
+    ${tw`justify-between`}
+    ${tw`sm:hidden`}
+  }
+
+  & > .short-pagination > .x-prev {
+    ${tw`relative`}
+    ${tw`inline-flex`}
+    ${tw`items-center`}
+    ${tw`px-4`}
+    ${tw`py-2`}
+    ${tw`border`}
+    ${tw`border-gray-300`}
+    ${tw`text-sm`}
+    ${tw`font-medium`}
+    ${tw`rounded-md`}
+    ${tw`text-gray-700`}
+    ${tw`bg-white`}
+    ${tw`hover:bg-gray-50`}
+  }
+
+  & > .short-pagination > .x-next {
+    ${tw`ml-3`}
+    ${tw`relative`}
+    ${tw`inline-flex`}
+    ${tw`items-center`}
+    ${tw`px-4`}
+    ${tw`py-2`}
+    ${tw`border`}
+    ${tw`border-gray-300`}
+    ${tw`text-sm`}
+    ${tw`font-medium`}
+    ${tw`rounded-md`}
+    ${tw`text-gray-700`}
+    ${tw`bg-white`}
+    ${tw`hover:bg-gray-50`}
+  }
+
+  & > .long-pagination {
+    ${tw`hidden`}
+    ${tw`sm:flex-1!`}
+    ${tw`sm:flex!`}
+    ${tw`sm:items-center!`}
+    ${tw`sm:justify-between!`}
+  }
+
+  & > .long-pagination > .x-info > p {
+    ${tw`text-sm`}
+    ${tw`text-gray-700`}
+  }
+
+  & > .long-pagination > .x-info > p > span {
+    ${tw`font-medium`}
+  }
+
+  & > .long-pagination > .x-numbers > nav {
+    ${tw`relative`}
+    ${tw`z-0`}
+    ${tw`inline-flex`}
+    ${tw`rounded-md`}
+    ${tw`shadow-sm`}
+    ${tw`-space-x-px`}
+  }
+
+  & > .long-pagination > .x-numbers > nav > .x-prev {
+    ${tw`relative`}
+    ${tw`inline-flex`}
+    ${tw`items-center`}
+    ${tw`px-2`}
+    ${tw`py-2`}
+    ${tw`rounded-l-md`}
+    ${tw`border`}
+    ${tw`border-gray-300`}
+    ${tw`bg-white`}
+    ${tw`text-sm`}
+    ${tw`font-medium`}
+    ${tw`text-gray-500`}
+    ${tw`hover:bg-gray-50`}
+  }
+
+  & > .long-pagination > .x-numbers > nav > .x-next {
+    ${tw`relative`}
+    ${tw`inline-flex`}
+    ${tw`items-center`}
+    ${tw`px-2`}
+    ${tw`py-2`}
+    ${tw`rounded-r-md`}
+    ${tw`border`}
+    ${tw`border-gray-300`}
+    ${tw`bg-white`}
+    ${tw`text-sm`}
+    ${tw`font-medium`}
+    ${tw`text-gray-500`}
+    ${tw`hover:bg-gray-50`}
+  }
+
+  & > .long-pagination > .x-numbers > nav > .x-prev > span,
+  & > .long-pagination > .x-numbers > nav > .x-next > span {
+    ${tw`sr-only`}
+  }
+
+  & .x-index {
+    ${tw`bg-white`}
+    ${tw`border-gray-300`}
+    ${tw`text-gray-500`}
+    ${tw`hover:bg-gray-50`}
+    ${tw`relative`}
+    ${tw`inline-flex`}
+    ${tw`items-center`}
+    ${tw`px-4`}
+    ${tw`py-2`}
+    ${tw`border`}
+    ${tw`text-sm`}
+    ${tw`font-medium`}
+  }
+
+  & .x-active {
+    ${tw`z-10`}
+    ${tw`bg-indigo-50`}
+    ${tw`border-indigo-500`}
+    ${tw`text-indigo-600`}
+    ${tw`hover:bg-indigo-50`}
+  }
+
+  & * {
+    ${tw`font-sans`}
+  }
+`;
