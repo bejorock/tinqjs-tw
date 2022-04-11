@@ -165,4 +165,9 @@ export const Field = styled(Referable)`
   & .multiComplete.x-input::-webkit-scrollbar {
     display: none;
   }
+
+  & .x-input {
+    ${tw`py-2`}
+    ${tw`px-3`}
+  }
 `;
