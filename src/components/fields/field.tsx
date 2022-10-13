@@ -59,6 +59,7 @@ export const Field = styled(Referable)`
   input[type="email"].x-input,
   input[type="number"].x-input,
   input[type="password"].x-input,
+  input[type="time"].x-input,
   input[type="tel"].x-input {
     ${tw`mt-1`}
     ${tw`focus:ring-indigo-500`}
