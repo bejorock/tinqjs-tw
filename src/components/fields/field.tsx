@@ -70,6 +70,7 @@ export const Field = styled(Referable)`
     ${tw`sm:text-sm`}
     ${tw`border-gray-300`}
     ${tw`disabled:bg-gray-200`}
+    ${tw`disabled:cursor-not-allowed`}
   }
 
   & input[type="text"].x-input:not(.not-rounded),
@@ -103,6 +104,8 @@ export const Field = styled(Referable)`
     ${tw`sm:text-sm`}
     ${tw`border-gray-300`}
     ${tw`rounded-md!`}
+    ${tw`disabled:bg-gray-200`}
+    ${tw`disabled:cursor-not-allowed`}
   }
 
   & select.x-input {
@@ -120,6 +123,8 @@ export const Field = styled(Referable)`
     ${tw`focus:ring-indigo-500`}
     ${tw`focus:border-indigo-500`}
     ${tw`sm:text-sm`}
+    ${tw`disabled:bg-gray-200`}
+    ${tw`disabled:cursor-not-allowed`}
   }
 
   & .fakeInput.x-input {
