@@ -17,13 +17,14 @@ export interface PagingOpts {
   limit: number;
   onChange: (index: number) => void;
   className?: string;
+  defaultIndex?: number;
 }
 
 const Template = (
-  { data, count, limit, onChange, className }: PagingOpts,
+  { data, count, limit, onChange, className, defaultIndex = 1 }: PagingOpts,
   ref: ForwardedRef<any>
 ) => {
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(defaultIndex);
   const [totalPages, setTotalPages] = useState(Math.ceil(count / limit));
   const [startSlice, setStartSlice] = useState(currentIndex);
   const [endSlice, setEndSlice] = useState(currentIndex + 3);
