@@ -24,6 +24,7 @@ const Template = (
   { data, count, limit, onChange, className, defaultIndex = 1 }: PagingOpts,
   ref: ForwardedRef<any>
 ) => {
+  // console.log(defaultIndex);
   const [currentIndex, setCurrentIndex] = useState(defaultIndex);
   const [totalPages, setTotalPages] = useState(Math.ceil(count / limit));
   const [startSlice, setStartSlice] = useState(currentIndex);
@@ -51,7 +52,7 @@ const Template = (
     );
   }
   useEffect(() => {
-    setCurrentIndex(1);
+    // setCurrentIndex(1);
     setTotalPages(Math.ceil(count / limit));
   }, [count]);
 
