@@ -89,7 +89,7 @@ export const Modal = styled(Referable)`
   & .x-dialog-body {
     ${tw`inline-block`}
     ${tw`w-full`}
-    ${tw`my-8`}
+    ${tw`mt-20`}
     ${tw`overflow-visible`}
     ${tw`text-left`}
     ${tw`align-middle`}

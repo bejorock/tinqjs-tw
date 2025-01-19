@@ -8,7 +8,7 @@ import tw from "twin.macro";
   reject: (e) => void;
 } */
 
-export interface IPromptOptions extends IModalOptions {
+export interface IPromptOptions extends Omit<IModalOptions, "children"> {
   question: string;
   answerYes?: string;
   answerNo?: string;
@@ -37,28 +37,39 @@ const Template = (props: IPromptOptions, ref: ForwardedRef<any>) => {
 const Referable = forwardRef(Template);
 
 export const Prompt = styled(Referable)`
-  & > .x-prompt-title {
-    ${tw`text-2xl`}
+  & .x-prompt-title {
+    ${tw`text-3xl`}
+    ${tw`font-semibold`}
+    ${tw`mb-5`}
+  }
+
+  & .x-prompt-action {
+    ${tw`flex`}
+    ${tw`justify-start`}
+    ${tw`gap-2`}
+  }
+
+  & .x-prompt-action .x-yes {
+    ${tw`border`}
+    ${tw`border-green-200`}
+    ${tw`rounded-md`}
+    ${tw`bg-green-400`}
+    ${tw`hover:bg-green-500`}
+    ${tw`px-3`}
+    ${tw`py-1.5`}
+    ${tw`text-white`}
     ${tw`font-semibold`}
   }
 
-  & > .x-prompt-action {
-    ${tw`flex`}
-    ${tw`justify-center`}
-    ${tw`gap-1.5`}
-  }
-
-  & > .x-prompt-action > .x-yes {
+  & .x-prompt-action .x-no {
     ${tw`border`}
-    ${tw`border-green-700`}
+    ${tw`border-red-200`}
     ${tw`rounded-md`}
-    ${tw`bg-green-500`}
-  }
-
-  & > .x-prompt-action > .x-no {
-    ${tw`border`}
-    ${tw`border-red-700`}
-    ${tw`rounded-md`}
-    ${tw`bg-red-500`}
+    ${tw`bg-red-400`}
+    ${tw`hover:bg-red-500`}
+    ${tw`px-3`}
+    ${tw`py-1.5`}
+    ${tw`text-white`}
+    ${tw`font-semibold`}
   }
 `;

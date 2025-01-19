@@ -60,7 +60,7 @@ const WidgetConfigTemplate = (
       onClose={context.onCloseConfig}
     >
       <div style={{ zIndex: 100 }}>
-        <div className=".x-widget-config-header">
+        <div className="x-widget-config-header">
           <h1>
             <FontAwesomeIcon icon={faCogs} />
             Widget Config

@@ -10,10 +10,10 @@ import {
 } from "./components";
 import styled from "styled-components";
 import tw from "twin.macro";
-import useTable from "./hooks/useTable";
+import { useTable } from "./hooks/useTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Table from "./components/table";
+import { Table } from "./components/table";
 import useAutoComplete from "./hooks/useAutoComplete";
 import useMultiComplete from "./hooks/useMultiComplete";
 import { useModal } from "./controllers/modal/useModal";
