@@ -2,7 +2,6 @@
 import esbuild from "esbuild";
 import fs from "fs";
 import path from "path";
-
 /* const {
   dependencies,
   peerDependencies,
@@ -12,8 +11,7 @@ import path from "path";
   keywords,
 } = require("./package.json"); */
 import dts from "npm-dts";
-
-import { nodeExternalsPlugin } from "esbuild-node-externals";
+// import { nodeExternalsPlugin } from "esbuild-node-externals";
 import babel from "esbuild-plugin-babel";
 
 const { dependencies, peerDependencies, name, version, author, keywords } =
