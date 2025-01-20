@@ -1,7 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-
 import faker from "faker";
-
 import {
   ColorPicker,
   IconPicker,
