@@ -3,3 +3,4 @@ dist
 public
 yarn.lock
 package-lock.json
+*storybook.log
